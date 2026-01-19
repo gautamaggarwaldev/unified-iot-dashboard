@@ -9,7 +9,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 min-h-screen hidden md:block bg-gradient-to-b from-slate-900 to-slate-800 text-white p-6">
+    <div className="w-64 min-h-screen hidden md:block bg-linear-to-b from-slate-900 to-slate-800 text-white p-6">
 
       <h2 className="text-2xl font-bold text-blue-400 mb-10">
         IoT Enterprise
