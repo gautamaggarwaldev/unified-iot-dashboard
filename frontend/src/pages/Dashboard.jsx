@@ -37,9 +37,9 @@ const Dashboard = () => {
     };
   }, []);
 
-  const onlineDevices = devices.filter(
-    (device) => device.status === "online"
-  ).length;
+  const onlineDevices = Array.isArray(devices)
+  ? devices.filter((device) => device.status === "online").length
+  : 0;
 
   return (
     <div className="flex bg-slate-100 dark:bg-slate-900 min-h-screen">
@@ -74,7 +74,7 @@ const Dashboard = () => {
 
             <StatCard
               title="Total Devices"
-              value={devices.length}
+              value={Array.isArray(devices) ? devices.length : 0}
               icon="📡"
             />
 
@@ -109,7 +109,7 @@ const Dashboard = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-              {telemetry.map((item, index) => (
+              {Array.isArray(telemetry) && telemetry.map((item, index) => (
 
                 <motion.div
                   key={index}

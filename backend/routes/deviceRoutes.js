@@ -1,11 +1,10 @@
 const router = require("express").Router();
-const auth = require("../middleware/authMiddleware");
 const {
   getDevices,
   getDeviceById
 } = require("../controllers/deviceController");
 
-router.get("/", auth, getDevices);
-router.get("/:id", auth, getDeviceById);
+router.get("/", getDevices);
+router.get("/:id", getDeviceById);
 
 module.exports = router;

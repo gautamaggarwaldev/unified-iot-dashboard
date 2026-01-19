@@ -1,11 +1,10 @@
 const router = require("express").Router();
-const auth = require("../middleware/authMiddleware");
 const {
   getLatestTelemetry,
   getDeviceTelemetry
 } = require("../controllers/telemetryController");
 
-router.get("/", auth, getLatestTelemetry);
-router.get("/:deviceId", auth, getDeviceTelemetry);
+router.get("/", getLatestTelemetry);
+router.get("/:deviceId", getDeviceTelemetry);
 
 module.exports = router;
