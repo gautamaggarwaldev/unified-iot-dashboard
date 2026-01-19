@@ -3,6 +3,18 @@ const Device = require("../models/Device");
 const Telemetry = require("../models/Telemetry");
 const { emitTelemetry } = require("../socket/socketHandler");
 
+setInterval(async () => {
+  const Device = require("../models/Device");
+
+  const offlineLimit = new Date(Date.now() - 15000); // 15 sec
+
+  await Device.updateMany(
+    { lastActive: { $lt: offlineLimit } },
+    { status: "offline" }
+  );
+}, 5000);
+
+
 const brokerUrl = process.env.MQTT_BROKER_URL;
 
 // Connect MQTT
