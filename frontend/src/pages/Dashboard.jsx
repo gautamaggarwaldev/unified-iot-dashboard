@@ -53,19 +53,16 @@ const Dashboard = () => {
 
   return (
     <div className="flex bg-slate-50 min-h-screen">
-      
       {/* SIDEBAR */}
       <Sidebar isOpen={sidebarOpen} onClose={handleCloseSidebar} />
 
       {/* MAIN CONTENT */}
       <div className="flex-1 flex flex-col min-w-0">
-        
         {/* TOP NAV */}
         <Navbar onMenuClick={handleMenuClick} />
 
         {/* PAGE CONTENT */}
         <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
-          
           {/* Page header */}
           <div className="mb-6 sm:mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
@@ -77,7 +74,7 @@ const Dashboard = () => {
           </div>
 
           {/* SYSTEM STATUS BANNER */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 sm:mb-8 relative overflow-hidden bg-gradient-to-r from-slate-100 to-slate-200 rounded-lg p-4 sm:p-6 shadow-lg"
@@ -85,21 +82,37 @@ const Dashboard = () => {
             <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3 sm:gap-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-teal-500/10 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 sm:w-7 sm:h-7 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-5 h-5 sm:w-7 sm:h-7 text-teal-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-slate-800 font-medium">System Status</p>
-                  <h3 className="text-base sm:text-xl font-bold text-slate-800">All services running normally</h3>
+                  <p className="text-xs sm:text-sm text-slate-800 font-medium">
+                    System Status
+                  </p>
+                  <h3 className="text-base sm:text-xl font-bold text-slate-800">
+                    All services running normally
+                  </h3>
                 </div>
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5 bg-teal-500/10 backdrop-blur-sm rounded-lg border border-teal-500/20">
                 <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" />
-                <span className="text-xs sm:text-sm font-medium text-teal-400">Live</span>
+                <span className="text-xs sm:text-sm font-medium text-teal-400">
+                  Live
+                </span>
               </div>
             </div>
-            
+
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-32 sm:w-64 h-32 sm:h-64 bg-teal-500/5 rounded-full -mr-16 sm:-mr-32 -mt-16 sm:-mt-32" />
             <div className="absolute bottom-0 left-0 w-24 sm:w-48 h-24 sm:h-48 bg-cyan-500/5 rounded-full -ml-12 sm:-ml-24 -mb-12 sm:-mb-24" />
@@ -107,7 +120,11 @@ const Dashboard = () => {
 
           {/* KPI CARDS */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 mb-6 sm:mb-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
               <StatCard
                 title="Total Devices"
                 value={Array.isArray(devices) ? devices.length : 0}
@@ -115,7 +132,11 @@ const Dashboard = () => {
               />
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
               <StatCard
                 title="Online Devices"
                 value={onlineDevices}
@@ -123,7 +144,11 @@ const Dashboard = () => {
               />
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
               <StatCard
                 title="Live Events"
                 value={telemetry.length}
@@ -144,7 +169,9 @@ const Dashboard = () => {
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg w-fit">
               <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-              <span className="text-xs font-semibold text-amber-700">STREAMING</span>
+              <span className="text-xs font-semibold text-amber-700">
+                STREAMING
+              </span>
             </div>
           </div>
 
@@ -170,7 +197,7 @@ const Dashboard = () => {
                   >
                     {/* Side accent */}
                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-teal-500" />
-                    
+
                     <div className="p-4 sm:p-5 pl-5 sm:pl-6">
                       {/* Header */}
                       <div className="flex justify-between items-start mb-3 sm:mb-4">
@@ -193,8 +220,11 @@ const Dashboard = () => {
                       {/* Value */}
                       <div className="flex items-baseline gap-2">
                         <p className="text-2xl sm:text-3xl font-bold text-slate-900">
-                          {item.value}
+                          {typeof item.value === "object"
+                            ? `${item.value.lat.toFixed(5)}, ${item.value.lng.toFixed(5)}`
+                            : item.value}
                         </p>
+
                         <span className="text-base sm:text-lg text-slate-500">
                           {item.unit}
                         </span>
@@ -202,8 +232,18 @@ const Dashboard = () => {
 
                       {/* Timestamp indicator */}
                       <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100 flex items-center gap-2 text-xs text-slate-500">
-                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
                         </svg>
                         <span>Just now</span>
                       </div>
@@ -213,15 +253,26 @@ const Dashboard = () => {
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center py-12 sm:py-16 px-4">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-100 flex items-center justify-center mb-4">
-                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    <svg
+                      className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                      />
                     </svg>
                   </div>
                   <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-2 text-center">
                     No telemetry data yet
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-500 text-center max-w-md">
-                    Waiting for devices to send telemetry updates. Data will appear here in real-time.
+                    Waiting for devices to send telemetry updates. Data will
+                    appear here in real-time.
                   </p>
                 </div>
               )}
