@@ -24,7 +24,6 @@ app.use(express.json());
 connectDB();
 
 
-app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/devices", require("./routes/deviceRoutes"));
 app.use("/api/telemetry", require("./routes/telemetryRoutes"));
 
