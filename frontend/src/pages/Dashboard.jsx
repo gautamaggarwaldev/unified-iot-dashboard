@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import socket from "../services/socket";
@@ -11,6 +11,14 @@ const Dashboard = () => {
   const [devices, setDevices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleMenuClick = useCallback(() => {
+    setSidebarOpen(true);
+  }, []);
+
+  const handleCloseSidebar = useCallback(() => {
+    setSidebarOpen(false);
+  }, []);
 
   // Fetch devices on load
   useEffect(() => {
@@ -28,12 +36,14 @@ const Dashboard = () => {
     fetchDevices();
 
     // Socket listener
-    socket.on("telemetry-update", (data) => {
+    const handleTelemetryUpdate = (data) => {
       setTelemetry((prev) => [data, ...prev.slice(0, 8)]);
-    });
+    };
+
+    socket.on("telemetry-update", handleTelemetryUpdate);
 
     return () => {
-      socket.off("telemetry-update");
+      socket.off("telemetry-update", handleTelemetryUpdate);
     };
   }, []);
 
@@ -42,26 +52,26 @@ const Dashboard = () => {
     : 0;
 
   return (
-    <div className="flex bg-slate-50 dark:bg-slate-950 min-h-screen">
+    <div className="flex bg-slate-50 min-h-screen">
       
       {/* SIDEBAR */}
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Sidebar isOpen={sidebarOpen} onClose={handleCloseSidebar} />
 
       {/* MAIN CONTENT */}
       <div className="flex-1 flex flex-col min-w-0">
         
         {/* TOP NAV */}
-        <Navbar onMenuClick={() => setSidebarOpen(true)} />
+        <Navbar onMenuClick={handleMenuClick} />
 
         {/* PAGE CONTENT */}
         <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
           
           {/* Page header */}
           <div className="mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
               Dashboard Overview
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">
+            <p className="text-sm sm:text-base text-slate-600">
               Monitor your IoT infrastructure in real-time
             </p>
           </div>
@@ -70,7 +80,7 @@ const Dashboard = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 sm:mb-8 relative overflow-hidden bg-gradient-to-r from-slate-800 to-slate-900 dark:from-slate-800 dark:to-slate-900 rounded-lg p-4 sm:p-6 shadow-lg"
+            className="mb-6 sm:mb-8 relative overflow-hidden bg-gradient-to-r from-slate-100 to-slate-200 rounded-lg p-4 sm:p-6 shadow-lg"
           >
             <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3 sm:gap-4">
@@ -80,8 +90,8 @@ const Dashboard = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-slate-400 font-medium">System Status</p>
-                  <h3 className="text-base sm:text-xl font-bold text-white">All services running normally</h3>
+                  <p className="text-xs sm:text-sm text-slate-800 font-medium">System Status</p>
+                  <h3 className="text-base sm:text-xl font-bold text-slate-800">All services running normally</h3>
                 </div>
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5 bg-teal-500/10 backdrop-blur-sm rounded-lg border border-teal-500/20">
@@ -125,16 +135,16 @@ const Dashboard = () => {
           {/* LIVE FEED SECTION */}
           <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-1">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">
                 Live Telemetry Stream
               </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-xs sm:text-sm text-slate-600">
                 Real-time data from connected devices
               </p>
             </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg w-fit">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg w-fit">
               <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-              <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">STREAMING</span>
+              <span className="text-xs font-semibold text-amber-700">STREAMING</span>
             </div>
           </div>
 
@@ -143,7 +153,7 @@ const Dashboard = () => {
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div
                   key={i}
-                  className="h-36 sm:h-40 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 animate-pulse"
+                  className="h-36 sm:h-40 bg-white rounded-lg border border-slate-200 animate-pulse"
                 />
               ))}
             </div>
@@ -156,7 +166,7 @@ const Dashboard = () => {
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="relative group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden hover:shadow-lg hover:border-teal-500 dark:hover:border-teal-400 transition-all duration-300"
+                    className="relative group bg-white rounded-lg border border-slate-200 overflow-hidden hover:shadow-lg hover:border-teal-500 transition-all duration-300"
                   >
                     {/* Side accent */}
                     <div className="absolute left-0 top-0 bottom-0 w-1 bg-teal-500" />
@@ -166,32 +176,32 @@ const Dashboard = () => {
                       <div className="flex justify-between items-start mb-3 sm:mb-4">
                         <div className="flex items-center gap-2 flex-1 min-w-0">
                           <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse flex-shrink-0" />
-                          <p className="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate">
+                          <p className="font-bold text-sm sm:text-base text-slate-900 truncate">
                             {item.deviceId}
                           </p>
                         </div>
-                        <span className="px-2 sm:px-2.5 py-1 text-xs font-bold rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 animate-pulse flex-shrink-0">
+                        <span className="px-2 sm:px-2.5 py-1 text-xs font-bold rounded-md bg-amber-50 text-amber-700 animate-pulse flex-shrink-0">
                           LIVE
                         </span>
                       </div>
 
                       {/* Metric */}
-                      <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-2 sm:mb-3">
+                      <p className="text-xs sm:text-sm text-slate-500 mb-2 sm:mb-3">
                         {item.metric}
                       </p>
 
                       {/* Value */}
                       <div className="flex items-baseline gap-2">
-                        <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+                        <p className="text-2xl sm:text-3xl font-bold text-slate-900">
                           {item.value}
                         </p>
-                        <span className="text-base sm:text-lg text-slate-500 dark:text-slate-400">
+                        <span className="text-base sm:text-lg text-slate-500">
                           {item.unit}
                         </span>
                       </div>
 
                       {/* Timestamp indicator */}
-                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-slate-100 flex items-center gap-2 text-xs text-slate-500">
                         <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -202,15 +212,15 @@ const Dashboard = () => {
                 ))
               ) : (
                 <div className="col-span-full flex flex-col items-center justify-center py-12 sm:py-16 px-4">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-slate-100 flex items-center justify-center mb-4">
                     <svg className="w-8 h-8 sm:w-10 sm:h-10 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
                   </div>
-                  <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white mb-2 text-center">
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-900 mb-2 text-center">
                     No telemetry data yet
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 text-center max-w-md">
+                  <p className="text-xs sm:text-sm text-slate-500 text-center max-w-md">
                     Waiting for devices to send telemetry updates. Data will appear here in real-time.
                   </p>
                 </div>

@@ -5,21 +5,21 @@ const StatCard = ({ title, value, icon }) => {
   const getCardStyle = (title) => {
     if (title.includes("Total")) {
       return {
-        iconBg: "bg-indigo-100 dark:bg-indigo-900/40",
-        iconColor: "text-indigo-600 dark:text-indigo-400",
-        accentColor: "text-indigo-600 dark:text-indigo-400"
+        iconBg: "bg-indigo-100",
+        iconColor: "text-indigo-600",
+        accentColor: "text-indigo-600"
       };
     } else if (title.includes("Online")) {
       return {
-        iconBg: "bg-teal-100 dark:bg-teal-900/40",
-        iconColor: "text-teal-600 dark:text-teal-400",
-        accentColor: "text-teal-600 dark:text-teal-400"
+        iconBg: "bg-teal-100",
+        iconColor: "text-teal-600",
+        accentColor: "text-teal-600"
       };
     } else {
       return {
-        iconBg: "bg-amber-100 dark:bg-amber-900/40",
-        iconColor: "text-amber-600 dark:text-amber-400",
-        accentColor: "text-amber-600 dark:text-amber-400"
+        iconBg: "bg-amber-100",
+        iconColor: "text-amber-600",
+        accentColor: "text-amber-600"
       };
     }
   };
@@ -27,16 +27,16 @@ const StatCard = ({ title, value, icon }) => {
   const style = getCardStyle(title);
 
   return (
-    <div className="group bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-teal-500 dark:hover:border-teal-400">
+    <div className="group bg-white rounded-lg border border-slate-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-teal-500">
       
       <div className="p-4 sm:p-5 lg:p-6">
         {/* Header */}
         <div className="flex justify-between items-start mb-4 sm:mb-6">
           <div className="flex-1 min-w-0">
-            <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1 sm:mb-2">
+            <p className="text-xs sm:text-sm font-medium text-slate-500 uppercase tracking-wider mb-1 sm:mb-2">
               {title}
             </p>
-            <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white tabular-nums truncate">
+            <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 tabular-nums truncate">
               <CountUp end={value} duration={2} separator="," />
             </p>
           </div>
@@ -60,10 +60,10 @@ const StatCard = ({ title, value, icon }) => {
         {/* Progress indicator */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-500 dark:text-slate-400">Activity</span>
+            <span className="text-slate-500">Activity</span>
             <span className={`font-semibold ${style.accentColor}`}>Live</span>
           </div>
-          <div className="h-1.5 sm:h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+          <div className="h-1.5 sm:h-2 bg-slate-100 rounded-full overflow-hidden">
             <div className={`h-full ${style.iconBg} rounded-full transition-all duration-1000 ease-out`} style={{ width: '75%' }} />
           </div>
         </div>

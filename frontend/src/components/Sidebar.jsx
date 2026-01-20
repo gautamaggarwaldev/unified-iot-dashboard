@@ -55,14 +55,15 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Sidebar */}
       <div className={`
         fixed lg:static inset-y-0 left-0 z-50
-        w-72 bg-slate-900 border-r border-slate-800
+        w-72 bg-white border-r border-slate-200 shadow-lg
         transform transition-transform duration-300 ease-in-out
         lg:transform-none flex flex-col
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0
       `}>
         
         {/* Logo section */}
-        <div className="p-6 lg:p-8 border-b border-slate-800">
+        <div className="p-6 lg:p-8 border-b border-slate-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center shadow-lg">
@@ -71,20 +72,21 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </svg>
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-bold text-slate-900">
                   IoT Platform
                 </h2>
-                <p className="text-xs text-slate-400">Enterprise</p>
+                <p className="text-xs text-slate-500">Enterprise</p>
               </div>
             </div>
 
             {/* Close button for mobile */}
             <button
+              type="button"
               onClick={onClose}
-              className="lg:hidden p-2 rounded-lg hover:bg-slate-800 transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
               aria-label="Close menu"
             >
-              <svg className="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-6 h-6 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -104,7 +106,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                   className={`group flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                     isActive
                       ? "bg-teal-600 text-white shadow-lg shadow-teal-600/30"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800"
+                      : "text-slate-600 hover:text-teal-700 hover:bg-slate-100"
                   }`}
                 >
                   <div className={`transition-transform ${isActive ? '' : 'group-hover:scale-110'}`}>
@@ -122,8 +124,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         </nav>
 
         {/* Footer section */}
-        <div className="p-4 lg:p-6 border-t border-slate-800">
-          <div className="px-4 py-3 rounded-lg bg-slate-800/50 border border-slate-700">
+        <div className="p-4 lg:p-6 border-t border-slate-200">
+          <div className="px-4 py-3 rounded-lg bg-slate-50 border border-slate-200">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center flex-shrink-0">
                 <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -131,8 +133,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-white truncate">System Status</p>
-                <p className="text-xs text-teal-400">All Systems Normal</p>
+                <p className="text-xs font-semibold text-slate-900 truncate">System Status</p>
+                <p className="text-xs text-teal-600">All Systems Normal</p>
               </div>
             </div>
           </div>
