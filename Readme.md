@@ -78,13 +78,6 @@ cd ../frontend
 npm install
 ```
 
-### 4. Install MQTT Simulator Dependencies
-
-```bash
-cd ../mqtt-simulator
-npm install
-```
-
 ## 🔐 Environment Variables
 
 ### Backend Configuration
@@ -207,7 +200,7 @@ If using local Mosquitto:
 mosquitto -v
 ```
 
-#### Start Backend Server
+#### Start Backend Server and Start MQTT Simulator
 
 ```bash
 cd backend
@@ -216,7 +209,7 @@ npm run dev
 
 The backend server will run on `http://localhost:5000`
 
-#### Start Frontend Development Server
+#### Start Frontend Development Server 
 
 ```bash
 cd frontend
@@ -224,13 +217,6 @@ npm run dev
 ```
 
 The frontend will run on `http://localhost:5173`
-
-#### Start MQTT Simulator (Optional)
-
-```bash
-cd mqtt-simulator
-node publisher.js
-```
 
 The simulator will start publishing mock IoT data to your MQTT broker.
 
