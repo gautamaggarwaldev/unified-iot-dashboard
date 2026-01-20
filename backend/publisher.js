@@ -49,11 +49,11 @@ function generatePayload(device) {
 
   switch (device.type) {
     case "temperature":
-      value = (20 + Math.random() * 10).toFixed(2);
+      value = parseFloat((20 + Math.random() * 10).toFixed(2));
       break;
 
     case "humidity":
-      value = (40 + Math.random() * 30).toFixed(2);
+      value = parseFloat((40 + Math.random() * 30).toFixed(2));
       break;
 
     case "air_quality":
