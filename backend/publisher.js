@@ -1,9 +1,7 @@
 const mqtt = require("mqtt");
 
-const brokerUrl = process.env.MQTT_BROKER_URL || "mqtt://broker.hivemq.com:1883";
-
-
-const client = mqtt.connect(brokerUrl);
+const brokerUrl =
+  process.env.MQTT_BROKER_URL || "mqtt://broker.hivemq.com:1883";
 
 // Device Configurations
 const devices = [
@@ -12,24 +10,38 @@ const devices = [
   { id: "device_003", type: "air_quality", unit: "PPM", location: "Factory" },
   { id: "device_004", type: "power", unit: "W", location: "Plant" },
   { id: "device_005", type: "gps", unit: "lat-long", location: "Vehicle" },
-  { id: "device_006", type: "motion", unit: "state", location: "Warehouse" }
+  { id: "device_006", type: "motion", unit: "state", location: "Warehouse" },
 ];
 
-client.on("connect", () => {
-  console.log("MQTT Simulator Connected");
+let client; // Prevent multiple connections
 
-  setInterval(() => {
-    devices.forEach((device) => {
-      const payload = generatePayload(device);
+function startPublisher() {
+  if (client) {
+    console.log("MQTT Publisher already running");
+    return;
+  }
 
-      const topic = `iot/devices/${device.id}/telemetry`;
+  client = mqtt.connect(brokerUrl);
 
-      client.publish(topic, JSON.stringify(payload));
+  client.on("connect", () => {
+    console.log("MQTT Simulator Connected");
 
-      console.log("Published:", payload.deviceId, payload.value);
-    });
-  }, 3000); // every 3 seconds
-});
+    setInterval(() => {
+      devices.forEach((device) => {
+        const payload = generatePayload(device);
+        const topic = `iot/devices/${device.id}/telemetry`;
+
+        client.publish(topic, JSON.stringify(payload));
+
+        console.log("Published:", payload.deviceId, payload.value);
+      });
+    }, 3000); // every 3 seconds
+  });
+
+  client.on("error", (err) => {
+    console.error("MQTT Publisher Error:", err);
+  });
+}
 
 // Data Generator
 function generatePayload(device) {
@@ -53,12 +65,18 @@ function generatePayload(device) {
       break;
 
     case "gps":
-      value = `${(28 + Math.random()).toFixed(5)}, ${(77 + Math.random()).toFixed(5)}`;
+      value = {
+        lat: parseFloat((28 + Math.random()).toFixed(5)),
+        lng: parseFloat((77 + Math.random()).toFixed(5)),
+      };
       break;
 
     case "motion":
       value = Math.random() > 0.5 ? 1 : 0;
       break;
+
+    default:
+      value = 0;
   }
 
   return {
@@ -68,6 +86,8 @@ function generatePayload(device) {
     value: value,
     unit: device.unit,
     location: device.location,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 }
+
+module.exports = startPublisher;

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const telemetrySchema = new mongoose.Schema({
   deviceId: String,
   metric: String,
-  value: Number,
+  value: mongoose.Schema.Types.Mixed,
   unit: String,
   timestamp: Date,
 });
