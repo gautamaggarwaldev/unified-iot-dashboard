@@ -1,39 +1,53 @@
-const Navbar = () => {
+const Navbar = ({ onMenuClick }) => {
 
   return (
-    <div className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
-      <div className="flex justify-between items-center px-8 py-4">
+    <div className="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
+      <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
         
-        {/* Left section - Title */}
-        <div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-            Unified IoT Control Panel
-          </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-            Real-time device monitoring and analytics
-          </p>
+        {/* Left section - Mobile menu + Title */}
+        <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+          {/* Mobile menu button */}
+          <button
+            onClick={onMenuClick}
+            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6 text-slate-700 dark:text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-900 dark:text-white truncate">
+              IoT Control Panel
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 hidden sm:block">
+              Real-time monitoring
+            </p>
+          </div>
         </div>
 
         {/* Right section - Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 flex-shrink-0">
           
-          {/* Status indicator */}
-          <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          {/* Status indicator - hidden on mobile */}
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-lg">
             <div className="relative">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping" />
+              <div className="w-2 h-2 bg-teal-500 rounded-full" />
+              <div className="absolute inset-0 w-2 h-2 bg-teal-500 rounded-full animate-ping" />
             </div>
-            <span className="text-sm font-medium text-green-700 dark:text-green-400">
-              System Online
+            <span className="text-xs font-medium text-teal-700 dark:text-teal-400">
+              Online
             </span>
           </div>
 
+         
 
-          {/* User avatar */}
-          <div className="hidden lg:flex items-center gap-3 pl-4 border-l border-slate-200 dark:border-slate-700">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-semibold shadow-lg">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          {/* User avatar - hidden on small screens */}
+          <div className="hidden xl:flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-slate-700">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center text-white shadow-sm">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
           </div>
