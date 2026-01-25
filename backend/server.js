@@ -27,6 +27,9 @@ connectDB();
 app.use("/api/devices", require("./routes/deviceRoutes"));
 app.use("/api/telemetry", require("./routes/telemetryRoutes"));
 
+app.get("/", (req, res) => {
+  res.status(200).send("Backend Alive");
+});
 
 initSocket(server);
 
